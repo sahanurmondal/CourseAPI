@@ -1,3 +1,4 @@
+/*
 package com.springbootstarter.service;
 
 import com.springbootstarter.bean.Users;
@@ -34,9 +35,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 	
 
-	/**
+	*/
+/**
 	 * Add some users at application startup for testing
-	 */
+	 *//*
+
 	@PostConstruct
 	public void loadUsers() {
 		List<Users> users = Arrays.asList(
@@ -46,3 +49,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 
 }
+*/

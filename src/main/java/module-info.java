@@ -10,8 +10,10 @@ module course.api.data {
     requires tomcat.embed.core;
     requires spring.security.core;
     requires spring.security.web;
-    requires java.xml.ws.annotation;
     requires spring.data.jpa;
+    requires spring.webmvc;
+    requires java.xml.ws.annotation;
+    //requires java.sql;
 
 
 }

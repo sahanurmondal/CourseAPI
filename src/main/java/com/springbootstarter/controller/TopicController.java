@@ -4,19 +4,54 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.springbootstarter.bean.Topic;
+import com.springbootstarter.bean.Users;
+import com.springbootstarter.service.LoginService;
 import com.springbootstarter.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class TopicController {
 	
 	@Autowired
 	private TopicService topicService;
+
+    @Autowired
+    LoginService service;
+
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public ModelAndView login(Model model, String error, String logout) {
+        System.out.println("GET ");
+		if (error != null)
+			model.addAttribute("errorMsg", "Your username and password are invalid.");
+
+		if (logout != null)
+			model.addAttribute("msg", "You have been logged out successfully.");
+        model.addAttribute("users", new Users());
+		return new ModelAndView( "login");
+	}
+    @RequestMapping(value="/login", method = RequestMethod.POST)
+    public ModelAndView showWelcomePageP(@ModelAttribute Users users){
+        System.out.println("post ");
+        Users u = service.validateUser(users.getUsername());
+        System.out.println("post ");
+        if (u !=null && u.getPassword()==users.getPassword()) {
+            // model.put("name", name);
+            System.out.println("valid user "+users.getUsername());
+            if(u.getRole()=="admin")
+                return new ModelAndView("AdminPage");
+            else
+                return new ModelAndView("UserPage");
+        }else{
+            System.out.println(" user not found"+users.getUsername()+users.getPassword());
+          //  model.put("errorMessage", "Invalid Credentials");
+            return new ModelAndView("login");
+        }
+
+    }
 	
 	@RequestMapping("/topics")
 	public List<Topic> getAllTopics() {

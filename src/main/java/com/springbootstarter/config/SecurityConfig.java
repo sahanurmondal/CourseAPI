@@ -1,5 +1,6 @@
 package com.springbootstarter.config;
 
+import com.springbootstarter.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,12 +24,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	private static String REALM_NAME ="RESTFUL_REALM";
 	
-	@Autowired
-	private UserDetailsService userDetailsService;
+	/*@Autowired
+	private UserDetailsService userDetailsService;*/
+    @Autowired
+    LoginService loginService;
+
+    @Autowired
+    AuthenticationSuccessHandlerImpl authenticationSuccessHandler;
 	
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService);
+		auth.userDetailsService(loginService);
 	}
 	
 	@Override
@@ -40,9 +46,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			  .antMatchers(HttpMethod.PUT, "/topics/**").hasAnyAuthority("ADMIN")
 			  .antMatchers(HttpMethod.DELETE, "/topics/**").hasAnyAuthority("ADMIN")
 			  .anyRequest().authenticated()
-			  .and().httpBasic()
-			  .realmName(REALM_NAME).authenticationEntryPoint(getBasicAuthEntryPoint())
-			  .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+			  //.and().httpBasic()
+              .and().formLogin()
+               .loginPage("/login").permitAll()
+              .successHandler(authenticationSuccessHandler)
+              //.failureUrl("/loginError")
+             // .loginProcessingUrl("/login")
+              .and()
+              .logout()
+              .permitAll()
+             // .and()
+             // .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
+             // .defaultSuccessUrl("/")
+                ;
+			//  .realmName(REALM_NAME).authenticationEntryPoint(getBasicAuthEntryPoint())
+			  //and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	  }
 	
 	
