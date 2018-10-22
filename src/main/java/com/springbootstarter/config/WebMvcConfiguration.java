@@ -1,20 +1,27 @@
 /*
+
 package com.springbootstarter.config;
 
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+@Configuration
 @EnableWebMvc
-@ComponentScan("org.springframework.security.samples.mvc")
-public class WebMvcConfiguration implements WebMvcConfigurer {
-
-    // ...
+public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
+    @Bean
+    public ViewResolver getViewResolver() {
+        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+        resolver.setPrefix("/templates/");
+        resolver.setSuffix(".html");
+        return resolver;
+    }
 
     @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/login").setViewName("login");
-        //registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
+    public void configureDefaultServletHandling(
+            DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
     }
 }*/
