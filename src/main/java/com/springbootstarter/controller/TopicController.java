@@ -1,17 +1,15 @@
 package com.springbootstarter.controller;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.springbootstarter.bean.Topic;
 import com.springbootstarter.bean.Users;
 import com.springbootstarter.service.LoginService;
 import com.springbootstarter.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @RestController
 public class TopicController {
@@ -41,7 +39,7 @@ public class TopicController {
         if (u !=null && u.getPassword()==users.getPassword()) {
             // model.put("name", name);
             System.out.println("valid user "+users.getUsername());
-            if(u.getRole()=="admin")
+            if(u.getRole()=="ADMIN")
                 return new ModelAndView("AdminPage");
             else
                 return new ModelAndView("UserPage");
@@ -52,7 +50,16 @@ public class TopicController {
         }
 
     }
-	
+	@RequestMapping(value="/welcome", method = RequestMethod.GET)
+    public String welcomeUser(@ModelAttribute Users users){
+        return "Welcome";
+    }
+
+    @RequestMapping(value="/addTopic", method = RequestMethod.GET)
+    public ModelAndView showAddtopic(Model model){
+        return new ModelAndView( "addTopic");
+    }
+
 	@RequestMapping("/topics")
 	public List<Topic> getAllTopics() {
 		return topicService.getAllTopics();
