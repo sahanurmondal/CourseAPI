@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
+//@CrossOrigin(origins = "http://localhost/8082", maxAge = 3600)
 @RestController
 public class TopicController {
 	
@@ -31,7 +32,7 @@ public class TopicController {
         model.addAttribute("users", new Users());
 		return new ModelAndView( "login");
 	}
-    @RequestMapping(value="/login", method = RequestMethod.POST)
+   /* @RequestMapping(value="/login", method = RequestMethod.POST)
     public ModelAndView showWelcomePageP(@ModelAttribute Users users){
         System.out.println("post ");
         Users u = service.validateUser(users.getUsername());
@@ -49,38 +50,42 @@ public class TopicController {
             return new ModelAndView("login");
         }
 
-    }
+    }*/
+
+    @CrossOrigin(origins = "http://localhost:8082")
 	@RequestMapping(value="/welcome", method = RequestMethod.GET)
     public String welcomeUser(@ModelAttribute Users users){
         return "Welcome";
     }
 
-    @RequestMapping(value="/addTopic", method = RequestMethod.GET)
+    /*@RequestMapping(value="/addTopic", method = RequestMethod.GET)
     public ModelAndView showAddtopic(Model model){
         return new ModelAndView( "addTopic");
-    }
-
-	@RequestMapping("/topics")
+    }*/
+    @CrossOrigin(origins = "http://localhost:8082")
+	@GetMapping("/topics")
 	public List<Topic> getAllTopics() {
 		return topicService.getAllTopics();
 	}
 	
-	@RequestMapping("/topics/{id}")
+	@GetMapping("/topics/{id}")
 	public Topic getTopic(@PathVariable String id) {
 		return topicService.getTopic(id);	
 	}
-	
-	@RequestMapping(method=RequestMethod.POST, value="/topics")
-	public void addTopic(@RequestBody Topic topic) {
+
+    @CrossOrigin(origins = "http://localhost:8082")
+	@PostMapping("/addtopics")
+	public String addTopic(@ModelAttribute Topic topic) {
 		topicService.addTopic(topic);
+		return ("Thanks For adding "+ topic.getId());
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, value="/topics/{id}")
+	@PutMapping("/topics/{id}")
 	public void updateTopic(@RequestBody Topic topic, @PathVariable String id) {
 		topicService.updateTopic(topic, id);
 	}
 	
-	@RequestMapping(method=RequestMethod.DELETE, value="/topics/{id}")
+	@DeleteMapping("/topics/{id}")
 	public void deleteTopic(@PathVariable String id) {
 		topicService.deleteTopic(id);
 	}

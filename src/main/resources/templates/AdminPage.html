@@ -1,6 +1,8 @@
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
 <body bgcolor="gray">
+<div th:fragment="content">
 <div style="text-align:center">
 <p >
 <h2 >Welcome to Admin Page </h2>
@@ -9,7 +11,7 @@
 
 <div style="text-align:right">
 <p >
-<form id="switchuser">
+<form id="switchuser" action="switchtouser">
   <input type="submit" name="action" value="Switch to User">
 </form>
 </p>
@@ -27,6 +29,7 @@
 <form id="delete" name="delete" action="/deleteTopic.html">
  <input type="submit" name="delete" value="delete">
 </form>
+</div>
 </body>
 </head>
 </html>

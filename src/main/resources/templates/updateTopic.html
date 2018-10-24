@@ -1,6 +1,8 @@
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
 <body bgcolor="#ffff8f">
+<div th:fragment="content">
 <div style="text-align:center">
 <p >
 <h2 >Update a Topic </h2>
@@ -15,7 +17,7 @@
   <input type="text" name="description" placeholder="description"><br/><br/><br/>
   <input type="submit" name="action" value="update">
 </form>
-
+</div>
 </body>
 </head>
 </html>

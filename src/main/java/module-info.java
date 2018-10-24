@@ -13,6 +13,7 @@ module course.api.data {
     requires spring.data.jpa;
     requires spring.webmvc;
     requires java.xml.ws.annotation;
+    requires spring.jcl;
     //requires java.sql;
 
 

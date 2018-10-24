@@ -1,6 +1,8 @@
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
 <body bgcolor="#ffff8f">
+<div th:fragment="content">
 <div style="text-align:center">
 <p >
 <h2 >Search a  Topic </h2>
@@ -13,7 +15,7 @@
   <input type="text" name="id" placeholder="id"><br/><br/><br/>
   <input type="submit" name="action" value="search">
 </form>
-
+</div>
 </body>
 </head>
 </html>
