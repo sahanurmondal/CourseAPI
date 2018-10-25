@@ -14,11 +14,11 @@
 
 
 
-<form id="add" th:action="@{/addtopics}"   method="POST"  th:object="${topic}"  >
+<form  action="#" th:action="@{/topics}"   method="post"  th:object="${topic}"  >
   <input type="text" name="id" placeholder="id" th:field="*{id}"><br/><br/><br/>
   <input type="text" name="name" placeholder="name" th:field="*{name}"><br/><br/><br/>
   <input type="text" name="description" placeholder="description" th:field="*{description}"><br/><br/><br/>
-  <input type="submit" name="action" value="add">
+  <input type="submit" name="add" value="add">
 </form>
 </div>
 <script>

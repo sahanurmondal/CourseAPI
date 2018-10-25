@@ -51,6 +51,20 @@ public class TopicController {
         }
 
     }*/
+   @GetMapping("/switchtouser")
+    public String switchToUserFromAdmin(){
+	   /*//HttpSecurity httpSecurity = new HttpSecurity();
+	   Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+	   List<GrantedAuthority> updatedAuthorities = new ArrayList<>(auth.getAuthorities());
+	   System.out.println("current authority : "+updatedAuthorities.get(0));
+	   updatedAuthorities.add(new SimpleGrantedAuthority("USER")); //add your role here [e.g., new SimpleGrantedAuthority("ROLE_NEW_ROLE")]
+
+	   Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), updatedAuthorities);
+	   System.out.println("no of auth : "+updatedAuthorities.size()+" new added role "+updatedAuthorities.get(1));
+	   SecurityContextHolder.getContext().setAuthentication(newAuth);*/
+	   return "Successfully updated authority";
+   }
 
     @CrossOrigin(origins = "http://localhost:8082")
 	@RequestMapping(value="/welcome", method = RequestMethod.GET)
@@ -73,9 +87,9 @@ public class TopicController {
 		return topicService.getTopic(id);	
 	}
 
-    @CrossOrigin(origins = "http://localhost:8082")
-	@PostMapping("/addtopics")
-	public String addTopic(@ModelAttribute Topic topic) {
+  //  @CrossOrigin(origins = "http://localhost:8082")
+	@PostMapping("/topics")
+	public String addTopic(@RequestBody Topic topic) {
 		topicService.addTopic(topic);
 		return ("Thanks For adding "+ topic.getId());
 	}

@@ -9,10 +9,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 /**
  * 
@@ -41,33 +39,35 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 	           http
-                       .cors()
+                      // .cors()
                        //.configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
-              .and()
-                     //  .csrf().disable()
+              //.and()
+					   .csrf().disable()
 			  .authorizeRequests()
-			  .antMatchers(HttpMethod.GET, "/topics/**").hasAnyAuthority("USER","ADMIN")
-			 .antMatchers(HttpMethod.POST, "/addtopics/**").hasAnyAuthority("ADMIN")
+					   //.antMatchers("/switchtouser").access()
+			  .antMatchers(HttpMethod.GET, "/topics/**").hasAnyAuthority("USER")
+			 .antMatchers(HttpMethod.POST, "/topics/**").hasAnyAuthority("ADMIN")
 			  .antMatchers(HttpMethod.PUT, "/topics/**").hasAnyAuthority("ADMIN")
 			  .antMatchers(HttpMethod.DELETE, "/topics/**").hasAnyAuthority("ADMIN")
 			  .anyRequest().authenticated()
-			  //.and().httpBasic()
-              .and().formLogin()
-              .loginPage("/login").permitAll()
+			   .and().httpBasic()
+             // .and().formLogin()
+             // .loginPage("/login").permitAll()
               //.loginProcessingUrl("/login")
-              .successHandler(authenticationSuccessHandler)
+             // .successHandler(authenticationSuccessHandler)
               //.failureUrl("/loginError")
              // .loginProcessingUrl("/login1")
-              .and()
-              .logout()
-              .permitAll()
-             // .and()
+              //.and()
+              //.logout()
+             // .permitAll()
+              //.and()
              // .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
              // .defaultSuccessUrl("/")
-                ;
-			//  .realmName(REALM_NAME).authenticationEntryPoint(getBasicAuthEntryPoint())
-			  //and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-	  }
+
+			 .realmName(REALM_NAME).authenticationEntryPoint(getBasicAuthEntryPoint())
+			 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+	  		;
+	}
 	
 	
 	@Bean
@@ -77,7 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return basicAuthEntryPoint;
 	}
 
-    @Bean
+    /*@Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.applyPermitDefaultValues();
@@ -85,6 +85,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
-    }
+    }*/
 
 }
