@@ -9,6 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 //@CrossOrigin(origins = "http://localhost/8082", maxAge = 3600)
@@ -51,6 +54,15 @@ public class TopicController {
         }
 
     }*/
+
+	@RequestMapping("/logout")
+	ModelAndView logout(HttpServletRequest r, Model model, HttpSession session) throws Exception {
+		if (session != null) {
+			session.invalidate();
+		}
+
+		return new ModelAndView( "login");
+	}
    @GetMapping("/switchtouser")
     public String switchToUserFromAdmin(){
 	   /*//HttpSecurity httpSecurity = new HttpSecurity();
@@ -68,8 +80,10 @@ public class TopicController {
 
     @CrossOrigin(origins = "http://localhost:8082")
 	@RequestMapping(value="/welcome", method = RequestMethod.GET)
-    public String welcomeUser(@ModelAttribute Users users){
-        return "Welcome";
+    public String welcomeUser(@ModelAttribute Users users, HttpServletRequest req, HttpServletResponse respons){
+		HttpSession session = req.getSession();
+		System.out.println(req.getSession().getId());
+		return "Welcome";
     }
 
     /*@RequestMapping(value="/addTopic", method = RequestMethod.GET)
@@ -78,8 +92,10 @@ public class TopicController {
     }*/
     @CrossOrigin(origins = "http://localhost:8082")
 	@GetMapping("/topics")
-	public List<Topic> getAllTopics() {
-		return topicService.getAllTopics();
+	public List<Topic> getAllTopics(HttpServletRequest req,HttpServletResponse respons) {
+		HttpSession session = req.getSession();
+		System.out.println(req.getSession().getId());
+    	return topicService.getAllTopics();
 	}
 	
 	@GetMapping("/topics/{id}")

@@ -14,6 +14,9 @@ module course.api.data {
     requires spring.webmvc;
     requires java.xml.ws.annotation;
     requires spring.jcl;
+    //requires spring.data.redis;
+    //requires spring.session.data.redis;
+   // requires spring.session.core;
     //requires java.sql;
 
 

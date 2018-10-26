@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 
 /**
@@ -51,21 +50,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			  .antMatchers(HttpMethod.DELETE, "/topics/**").hasAnyAuthority("ADMIN")
 			  .anyRequest().authenticated()
 			   .and().httpBasic()
-             // .and().formLogin()
-             // .loginPage("/login").permitAll()
+              .and().formLogin()
+             .loginPage("/login").permitAll()
               //.loginProcessingUrl("/login")
-             // .successHandler(authenticationSuccessHandler)
+             .successHandler(authenticationSuccessHandler)
               //.failureUrl("/loginError")
              // .loginProcessingUrl("/login1")
-              //.and()
-              //.logout()
-             // .permitAll()
+              .and()
+              .logout()
+              .permitAll()
               //.and()
              // .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
              // .defaultSuccessUrl("/")
 
-			 .realmName(REALM_NAME).authenticationEntryPoint(getBasicAuthEntryPoint())
-			 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+			// .realmName(REALM_NAME).authenticationEntryPoint(getBasicAuthEntryPoint())
+			// .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
 	  		;
 	}
 	

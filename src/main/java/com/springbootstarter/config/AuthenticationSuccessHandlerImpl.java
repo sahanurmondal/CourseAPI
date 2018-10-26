@@ -78,7 +78,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
         if (session == null) {
             return;
         }
-        session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+       session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
     }
 
     public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
