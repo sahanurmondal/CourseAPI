@@ -60,14 +60,11 @@ public class VerifyAccessInterceptor implements HandlerInterceptor {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         List<GrantedAuthority> updatedAuthorities = new ArrayList<>(auth.getAuthorities());
         updatedAuthorities.add(new SimpleGrantedAuthority("USER"));
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                user,
-                "password",
-                updatedAuthorities); //Where authorities is a List<GrantedAuthority> = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+       // UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user, "password", updatedAuthorities); //Where authorities is a List<GrantedAuthority> = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 
        //request.getSession();
 
-        token.setDetails(new WebAuthenticationDetails(request));
+      //  token.setDetails(new WebAuthenticationDetails(request));
 
        /// Authentication authenticatedUser = AuthenticationManager.authenticate(token);//--------A
         Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), updatedAuthorities);

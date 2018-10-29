@@ -9,7 +9,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 /**
  * 
@@ -38,9 +42,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 	           http
-                      // .cors()
+                       .cors()
                        //.configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
-              //.and()
+              .and()
 					   .csrf().disable()
 			  .authorizeRequests()
 					   //.antMatchers("/switchtouser").access()
@@ -63,8 +67,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
              // .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
              // .defaultSuccessUrl("/")
 
-			// .realmName(REALM_NAME).authenticationEntryPoint(getBasicAuthEntryPoint())
-			// .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
+			//.realmName(REALM_NAME).authenticationEntryPoint(getBasicAuthEntryPoint())
+			 //.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
 	  		;
 	}
 	
@@ -76,14 +80,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return basicAuthEntryPoint;
 	}
 
-    /*@Bean
-    CorsConfigurationSource corsConfigurationSource() {
+    @Bean
+	CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.applyPermitDefaultValues();
         config.setAllowCredentials(true);// this line is important it sends only specified domain instead of *
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
-    }*/
+    }
 
 }

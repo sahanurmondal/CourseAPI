@@ -1,22 +1,41 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
+
 <body bgcolor="gray">
 <div th:fragment="content">
 <div style="text-align:center">
 <p >
 <h2 >Welcome to Admin Page </h2>
 </p>
-</div>
+    <div id="demo1">
 
+    </div>
+</div>
+    <div style="float:right">
+        <form align="right" name="logoutForm" method="post" action="\logout">
+            <label class="logoutLblPos">
+                <input name="submit2" type="submit" id="submit2" value="Log out"><br/><br/><br/>
+            </label>
+        </form>
+    </div>
 <div style="text-align:right">
 <p >
-<form id="switchuser" action="switchtouser">
-  <input type="submit" name="action" value="Switch to User">
+<form id="switchuser" action="/switchtouser" onsubmit="return showDiv(this)">
+  <input type="submit" name="action" value="Switch to User" onclick="loadDoc()"><br/><br/>
 </form>
 </p>
 </div>
 
+    <div id="userDiv"  style="display:none;" >
+        <form id="get" action="\topics" method="get">
+            <input type="submit" name="action" value="get">
+        </form>
+
+        <form id="search" name="search" action="/searchTopic.html">
+            <input type="submit" name="action" value="search">
+        </form>
+    </div>
 
 <form name="add" action="/addTopic.html">
   <input type="submit" name="add" value="add">
@@ -30,6 +49,8 @@
  <input type="submit" name="delete" value="delete">
 </form>
 </div>
+<script src="js/custom.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.3.min.js" ></script>
 </body>
 </head>
 </html>

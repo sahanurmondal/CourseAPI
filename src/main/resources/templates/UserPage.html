@@ -9,16 +9,24 @@
 </p>
 </div>
 
+    <div style="float:right">
+        <form align="right" name="logoutForm" method="post" action="\logout">
+            <label class="logoutLblPos">
+                <input name="submit2" type="submit" id="submit2" value="Log out"><br/><br/><br/>
+            </label>
+        </form>
+    </div>
 
-
-<form id="get">
+<form id="get" action="\topics" method="get">
   <input type="submit" name="action" value="get">
 </form>
 
-<form id="search">
+<form id="search" name="search" action="/searchTopic.html">
  <input type="submit" name="action" value="search">
 </form>
 </div>
+<script src="js/custom.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.3.min.js" ></script>
 </body>
 </head>
 </html>

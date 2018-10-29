@@ -83,7 +83,7 @@ public class TopicController {
     public String welcomeUser(@ModelAttribute Users users, HttpServletRequest req, HttpServletResponse respons){
 		HttpSession session = req.getSession();
 		System.out.println(req.getSession().getId());
-		return "Welcome";
+		return "Welcome !!!!!!!!!!";
     }
 
     /*@RequestMapping(value="/addTopic", method = RequestMethod.GET)
@@ -94,12 +94,14 @@ public class TopicController {
 	@GetMapping("/topics")
 	public List<Topic> getAllTopics(HttpServletRequest req,HttpServletResponse respons) {
 		HttpSession session = req.getSession();
-		System.out.println(req.getSession().getId());
+		System.out.println("Current session id "+req.getSession().getId());
     	return topicService.getAllTopics();
 	}
 	
 	@GetMapping("/topics/{id}")
-	public Topic getTopic(@PathVariable String id) {
+	public Topic getTopic(HttpServletRequest req,@PathVariable String id) {
+		HttpSession session = req.getSession();
+		System.out.println("Current session id in search topic "+req.getSession().getId());
 		return topicService.getTopic(id);	
 	}
 

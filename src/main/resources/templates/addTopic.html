@@ -11,32 +11,24 @@
 <h2 >Add a New Topic </h2>
 </p>
 </div>
+  <div style="float:right">
+    <form align="right" name="logoutForm" method="post" action="\logout">
+      <label class="logoutLblPos">
+        <input name="submit2" type="submit" id="submit2" value="Log out"><br/><br/><br/>
+      </label>
+    </form>
+  </div>
 
 
-
-<form  action="#" th:action="@{/topics}"   method="post"  th:object="${topic}"  >
+<form   action="/topics"   method="post"  th:object="${topic}"  >
   <input type="text" name="id" placeholder="id" th:field="*{id}"><br/><br/><br/>
   <input type="text" name="name" placeholder="name" th:field="*{name}"><br/><br/><br/>
   <input type="text" name="description" placeholder="description" th:field="*{description}"><br/><br/><br/>
   <input type="submit" name="add" value="add">
 </form>
 </div>
-<script>
-  function onSubmit( form ){
-  var serialized = $(form).serializeArray();
-        var s = '';
-        var data = {};
-        for(s in serialized){
-            data[serialized[s]['name']] = serialized[s]['value'];
-        }
-   data = JSON.stringify( data );
-    alert(data);
-  console.log( data );
-  return true; // submit
-
-
-}
-</script>
+<script src="js/custom.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.3.min.js" ></script>
 </body>
 </head>
 </html>

@@ -1,6 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
+
 <body bgcolor="#ffff8f">
 <div th:fragment="content">
 <div style="text-align:center">
@@ -8,14 +9,22 @@
 <h2 >Search a  Topic </h2>
 </p>
 </div>
+    <div style="float:right">
+        <form align="right" name="logoutForm" method="post" action="\logout">
+            <label class="logoutLblPos">
+                <input name="submit2" type="submit" id="submit2" value="Log out"><br/><br/><br/>
+            </label>
+        </form>
+    </div>
 
 
-
-<form id="search">
-  <input type="text" name="id" placeholder="id"><br/><br/><br/>
-  <input type="submit" name="action" value="search">
+<form id="search-form" method="get" onsubmit="setAction(this)">
+  <input id="Id" type="text" name="id" placeholder="id"><br/><br/><br/>
+  <input type="submit" name="search" value="search id">
 </form>
 </div>
+<script src="js/custom.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.3.min.js" ></script>
 </body>
 </head>
 </html>
