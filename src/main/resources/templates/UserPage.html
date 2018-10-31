@@ -1,6 +1,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <body bgcolor=" #a6b259 ">
 <div th:fragment="content">
 <div style="text-align:center">
@@ -18,11 +20,11 @@
     </div>
 
 <form id="get" action="\topics" method="get">
-  <input type="submit" name="action" value="get">
+  <input type="submit" name="get" value="get">
 </form>
 
 <form id="search" name="search" action="/searchTopic.html">
- <input type="submit" name="action" value="search">
+ <input type="submit" name="search" value="search">
 </form>
 </div>
 <script src="js/custom.js"></script>

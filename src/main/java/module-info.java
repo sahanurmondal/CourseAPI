@@ -5,7 +5,7 @@ module course.api.data {
     requires spring.web;
     requires spring.beans;
     requires spring.context;
-    requires hibernate.jpa;
+    //requires hibernate.jpa;
     requires spring.security.config;
     requires tomcat.embed.core;
     requires spring.security.core;
@@ -14,6 +14,14 @@ module course.api.data {
     requires spring.webmvc;
     requires java.xml.ws.annotation;
     requires spring.jcl;
+  requires thymeleaf.spring5;
+
+    requires thymeleaf;
+    requires java.persistence;
+    requires thymeleaf.extras.springsecurity4;
+    //requires thymeleaf.spring4;
+
+
     //requires spring.data.redis;
     //requires spring.session.data.redis;
    // requires spring.session.core;

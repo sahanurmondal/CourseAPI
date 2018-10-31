@@ -1,5 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -18,7 +19,8 @@
       </label>
     </form>
   </div>
-
+  <div sec:authorize="hasRole('USER')">Text visible to user ...<span th:text ="${#authentication.getPrincipal().getUsername()}"></span></div>
+  <div sec:authorize="hasRole('ADMIN123')">Text visible to admin.</div>
 
 <form   action="/topics"   method="post"  th:object="${topic}"  >
   <input type="text" name="id" placeholder="id" th:field="*{id}"><br/><br/><br/>

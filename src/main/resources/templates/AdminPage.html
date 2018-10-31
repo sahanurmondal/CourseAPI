@@ -1,14 +1,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <body bgcolor="gray">
 <div th:fragment="content">
 <div style="text-align:center">
 <p >
 <h2 >Welcome to Admin Page </h2>
 </p>
-    <div id="demo1">
+    <div id="demo1" style="float:left" >
 
     </div>
 </div>
@@ -21,19 +23,31 @@
     </div>
 <div style="text-align:right">
 <p >
-<form id="switchuser" action="/switchtouser" onsubmit="return showDiv(this)">
-  <input type="submit" name="action" value="Switch to User" onclick="loadDoc()"><br/><br/>
+<form id="switch-user" action="/switchtouser" onsubmit="return showDiv(this)">
+  <input type="submit" name="action" value="Switch to User"  ><br/><br/>
 </form>
 </p>
 </div>
 
-    <div id="userDiv"  style="display:none;" >
+    <div sec:authentication="name"></div> <!-- works fine -->
+    <div sec:authentication="principal.authorities"></div> <!-- works fine -->
+
+    <div  sec:authorize="isAuthenticated()" >true</div> <!-- works fine -->
+    <span th:text="${#authorization.expression('isAuthenticated()')}"></span> <!-- works fine -->
+
+    <div th:text="${#vars.role_user}"> Admin</div> <!--Works fine -->
+    <div  sec:authorize="${hasRole('USER')}" > IS USER </div> <!-- Doesnt work -->
+    <div  sec:authorize="hasAuthority('USER')" > IS ADMIN </div> <!-- Doesnt work -->
+    <div th:text="${#authorization.expression('hasRole(''ADMIN'')')} ">check</div> <!-- Doesnt work -->
+    <div th:text="${#authorization.expression('hasRole(#vars.role_admin)')}"></div> <!-- Doesnt work -->
+
+    <div id="userDiv"   sec:authorize="hasAuthority('USER')" >
         <form id="get" action="\topics" method="get">
-            <input type="submit" name="action" value="get">
+            <input type="submit" name="get" value="get">
         </form>
 
         <form id="search" name="search" action="/searchTopic.html">
-            <input type="submit" name="action" value="search">
+            <input type="submit" name="search" value="search">
         </form>
     </div>
 

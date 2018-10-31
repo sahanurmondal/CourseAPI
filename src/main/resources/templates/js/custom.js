@@ -17,12 +17,19 @@ return true;
 
 //for switch to user
   function showDiv( form ){
-document.getElementById('userDiv').style.display = "block";
+//document.getElementById('userDiv').style.display = "block";
+
+//document.getElementById('userDiv').setAttribute('style','display:block');
+var loc = window.location;
+var baseUrl = loc.protocol + "//" + loc.hostname + (loc.port? ":"+loc.port : "");
+var url=baseUrl+$('#switch-user').attr('action');
+//alert('HIII ' + url);
+loadDoc(url);
 return false;
 }
 
 //to show response in the same page
-function loadDoc() {
+function loadDoc(url) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -30,7 +37,7 @@ function loadDoc() {
       this.responseText;
     }
   };
-  xhttp.open("GET", "ajax_info.txt", true);
+  xhttp.open("GET", url, true);
   xhttp.send();
 }
 

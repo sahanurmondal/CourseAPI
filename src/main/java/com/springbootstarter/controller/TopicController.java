@@ -5,10 +5,13 @@ import com.springbootstarter.bean.Users;
 import com.springbootstarter.service.LoginService;
 import com.springbootstarter.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -16,7 +19,7 @@ import java.util.List;
 
 //@CrossOrigin(origins = "http://localhost/8082", maxAge = 3600)
 @RestController
-public class TopicController {
+public class TopicController implements ErrorController {
 	
 	@Autowired
 	private TopicService topicService;
@@ -121,4 +124,28 @@ public class TopicController {
 	public void deleteTopic(@PathVariable String id) {
 		topicService.deleteTopic(id);
 	}
+
+	@Override
+	public String getErrorPath() {
+		return "/error";
+	}
+	@RequestMapping("/error")
+	public String handleError(HttpServletRequest request) {
+		Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+
+		if (status != null) {
+			Integer statusCode = Integer.valueOf(status.toString());
+
+			if(statusCode == HttpStatus.NOT_FOUND.value()) {
+				return "Not found";
+			}
+			else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+				return "Internal server error occurred";
+			}else if(statusCode ==403){
+                return "You don't have access for this";
+            }
+		}
+		return "Something went wrong";
+	}
+
 }
