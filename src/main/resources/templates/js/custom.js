@@ -76,7 +76,7 @@ function loadDoc(url,methodType) {
 
 
 //to convert form data to json
-function onSubmit( form ){
+function setAddDetails( form ){
   var serialized = $(form).serializeArray();
         var s = '';
         var data = {};
@@ -85,8 +85,23 @@ function onSubmit( form ){
         }
    data = JSON.stringify( data );
     alert(data);
-  console.log( data );
-  return true; // submit
+ // console.log( data );
+
+ $.ajax({
+     url: url,
+     data:data,
+     type: 'post',
+     //contentType: 'application/json',
+     success: function(result) {
+           // alert('HII '+result);
+         document.getElementById("demo1").innerHTML =result;
+         //document.getElementById("demo1").appendChild(document.createElement("br"));
+     },
+     error: function(request,msg,error) {
+         // handle failure
+     }
+ });
+  return false; // submit
 
 
 }
