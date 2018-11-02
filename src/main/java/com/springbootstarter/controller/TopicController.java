@@ -121,8 +121,9 @@ public class TopicController implements ErrorController {
 	}
 	
 	@DeleteMapping("/topics/{id}")
-	public void deleteTopic(@PathVariable String id) {
+	public String deleteTopic(@PathVariable String id) {
 		topicService.deleteTopic(id);
+		return  "Topic "+id+" has been deleted successfully";
 	}
 
 	@Override

@@ -7,9 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 import org.thymeleaf.TemplateEngine;
 /*import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
@@ -26,7 +24,7 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 //@EnableWebMvc
 @Configuration
 //@ComponentScan("com.springbootstarter")
-public class WebMvcConfiguration implements WebMvcConfigurer {
+public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Autowired
     private VerifyAccessInterceptor verifyAccessInterceptor;
@@ -70,7 +68,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
-
+        templateEngine.setEnableSpringELCompiler(true);
+        templateEngine.addDialect(securityDialect());
         return templateEngine;
     }
 
@@ -90,6 +89,14 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     public SpringSecurityDialect securityDialect() {
         return new SpringSecurityDialect();
     }
+
+   /* @Bean
+    public SpringTemplateEngine templateEngine() {
+        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+        templateEngine.setTemplateResolver(templateResolver());
+        templateEngine.addDialect(new SpringSecurityDialect());
+        return templateEngine;
+    }*/
 
     /*@Override
     public void addViewControllers(ViewControllerRegistry registry) {
