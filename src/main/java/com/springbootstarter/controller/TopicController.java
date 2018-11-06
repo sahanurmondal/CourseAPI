@@ -112,12 +112,13 @@ public class TopicController implements ErrorController {
 	@PostMapping("/topics")
 	public String addTopic(@RequestBody Topic topic) {
 		topicService.addTopic(topic);
-		return ("Thanks For adding "+ topic.getId());
+		return ("New topic "+ topic.getId())+" has been added successfully";
 	}
 	
 	@PutMapping("/topics/{id}")
-	public void updateTopic(@RequestBody Topic topic, @PathVariable String id) {
-		topicService.updateTopic(topic, id);
+	public String updateTopic(@RequestBody Topic topic, @PathVariable String id) {
+		return topicService.updateTopic(topic, id);
+       // return ("Topic "+ id+" has been updated successfully");
 	}
 	
 	@DeleteMapping("/topics/{id}")

@@ -1,107 +1,76 @@
 
 //For search topic
   function setActionSearch( form ){
-$('#search-form').attr('action', '/topics/'+$('#Id').val());
-//alert("HIIIII  "+$('#searchId').val());
-//alert($('#search-form').attr('action'));
-return true;
-}
+    $('#search-form').attr('action', '/topics/'+$('#Id').val());
+    return true;
+  }
 
 //For update topic
   function setActionUpdate( form ){
-$('#update-form').attr('action', '/topics/'+$('#Id').val());
-//alert("HIIIII  "+$('#searchId').val());
-//alert($('#search-form').attr('action'));
-return true;
-}
+    $('#update-form').attr('action', '/topics/'+$('#Id').val());
+    data =convertToJsonData(form) ;
+    var url=getBaseUrl() + $('#update-form').attr('action');
+    sendJsonUsingAjax(url,'PUT',data);
+    return false;
+  }
 
 //For delete topic
-function setActionDelete( form ){
-$('#delete-form').attr('action', '/topics/'+$('#Id').val());
-//alert("HIIIII  "+$('#searchId').val());
-//alert($('#delete-form').attr('action'));
-var url=getBaseUrl() + $('#delete-form').attr('action');
-//loadDoc(url,"DELETE");
-//alert(url);
-$.ajax({
-    url: url,
-    type: 'DELETE',
-    //contentType: 'application/json',
-    success: function(result) {
-          // alert('HII '+result);
-        document.getElementById("demo1").innerHTML =result;
-        //document.getElementById("demo1").appendChild(document.createElement("br"));
-    },
-    error: function(request,msg,error) {
-        // handle failure
-    }
-});
-return false;
-}
+ function setActionDelete( form ){
+    $('#delete-form').attr('action', '/topics/'+$('#Id').val());
+    var url=getBaseUrl() + $('#delete-form').attr('action');
+    sendJsonUsingAjax(url,"DELETE");
+    return false;
+  }
 
 // to get base url of the request
-function getBaseUrl(){
-var loc = window.location;
-var baseUrl = loc.protocol + "//" + loc.hostname + (loc.port? ":"+loc.port : "");
-return baseUrl;
-}
+  function getBaseUrl(){
+    var loc = window.location;
+    var baseUrl = loc.protocol + "//" + loc.hostname + (loc.port? ":"+loc.port : "");
+    return baseUrl;
+  }
+
 //for switch to user
   function showDiv( form ){
-//document.getElementById('userDiv').style.display = "block";
+    document.getElementById('userDiv').style.display = "block";
+    var url=getBaseUrl()+$('#switch-user').attr('action');
+    alert(url);
+    sendJsonUsingAjax(url,"GET");
+    return false;
+  }
 
-document.getElementById('userDiv').setAttribute('style','display:block');
-var loc = window.location;
-var baseUrl = loc.protocol + "//" + loc.hostname + (loc.port? ":"+loc.port : "");
-var url=baseUrl+$('#switch-user').attr('action');
-//alert('HIII ' + url);
-loadDoc(url,"GET");
-return false;
-}
-
-//to show response in the same page
-function loadDoc(url,methodType) {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("demo1").innerHTML =
-      this.responseText;
-    }
-  };
-  //alert(methodType);
-  xhttp.open(methodType, url, true);
-  //alert(methodType);
-  xhttp.send();
-
-}
-
+//For Add operation
+  function setAddDetails( form ){
+    data =convertToJsonData(form) ;
+    var url=getBaseUrl() + $('#add-form').attr('action');
+    sendJsonUsingAjax(url,'POST',data);
+    return false; // submit
+  }
 
 //to convert form data to json
-function setAddDetails( form ){
-  var serialized = $(form).serializeArray();
-        var s = '';
-        var data = {};
-        for(s in serialized){
-            data[serialized[s]['name']] = serialized[s]['value'];
+  function convertToJsonData(form){
+    var serialized = $(form).serializeArray();
+            var s = '';
+            var data = {};
+            for(s in serialized){
+                data[serialized[s]['name']] = serialized[s]['value'];
+            }
+    return JSON.stringify( data );
+  }
+
+//for Ajax call
+  function sendJsonUsingAjax(url,methodType,data){
+    $.ajax({
+        url: url,
+        data:data,
+        type: methodType,
+        contentType: 'application/json',
+        success: function(result) {
+              // alert('HII1 '+result);
+            document.getElementById("demo1").innerHTML =result;
+            //document.getElementById("demo1").appendChild(document.createElement("br"));
+        },
+        error: function(request,msg,error) {
+            //alert('Bye '+error);
         }
-   data = JSON.stringify( data );
-    alert(data);
- // console.log( data );
-
- $.ajax({
-     url: url,
-     data:data,
-     type: 'post',
-     //contentType: 'application/json',
-     success: function(result) {
-           // alert('HII '+result);
-         document.getElementById("demo1").innerHTML =result;
-         //document.getElementById("demo1").appendChild(document.createElement("br"));
-     },
-     error: function(request,msg,error) {
-         // handle failure
-     }
- });
-  return false; // submit
-
-
-}
+    });
+  }

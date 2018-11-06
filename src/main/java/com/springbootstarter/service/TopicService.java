@@ -30,9 +30,16 @@ public class TopicService {
 		topicRepository.save(topic);
 	}
 
-	public void updateTopic(Topic topic, String id) {
-		topic.setId(id);
-		topicRepository.save(topic);	
+	public String updateTopic(Topic topic, String id) {
+		String res="";
+		if(!(topicRepository.findById(id).orElse(null)==null)) {
+			topic.setId(id);
+			topicRepository.save(topic);
+			res="Topic "+ id+" has been updated successfully";
+		}else
+			res="Topic "+id +" Not Found";
+
+		return res;
 	}
 	
 	public void deleteTopic(String id) {
